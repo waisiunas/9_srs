@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
     if (count($errors) === 0) {
         $hashed_password = sha1($password);
         $sql = "SELECT * FROM `users` WHERE `email` = '$email' AND `password` = '$hashed_password'";
-        $result = $connection->query($sql);
+        $result = $conn->query($sql);
 
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();

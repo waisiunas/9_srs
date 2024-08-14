@@ -6,9 +6,9 @@ if (!isset($_SESSION['user'])) {
     header('location: ./');
 }
 
-$sql = "SELECT * FROM `students`";
+$sql = "SELECT * FROM `courses`";
 $result = $conn->query($sql);
-$students = $result->fetch_all(MYSQLI_ASSOC);
+$courses = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +27,11 @@ $students = $result->fetch_all(MYSQLI_ASSOC);
 
                     <div class="row">
                         <div class="col-6">
-                            <h1 class="h3 mb-3">Students</h1>
+                            <h1 class="h3 mb-3">Courses</h1>
                         </div>
 
                         <div class="col-6 text-end">
-                            <a href="./add-student.php" class="btn btn-outline-primary">Add Student</a>
+                            <a href="./add-course.php" class="btn btn-outline-primary">Add Course</a>
                         </div>
                     </div>
 
@@ -46,7 +46,7 @@ $students = $result->fetch_all(MYSQLI_ASSOC);
                                                 <tr>
                                                     <th>Sr. No.</th>
                                                     <th>Name</th>
-                                                    <th>Reg. No.</th>
+                                                    <th>Duration</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -54,14 +54,14 @@ $students = $result->fetch_all(MYSQLI_ASSOC);
                                             <tbody>
                                                 <?php
                                                 $sr = 1;
-                                                foreach ($students as $student) { ?>
+                                                foreach ($courses as $course) { ?>
                                                     <tr>
                                                         <td><?php echo $sr++; ?></td>
-                                                        <td><?php echo $student['name'] ?></td>
-                                                        <td><?php echo $student['reg_no'] ?></td>
+                                                        <td><?php echo $course['name'] ?></td>
+                                                        <td><?php echo $course['duration'] ?></td>
                                                         <td>
-                                                            <a href="./edit-student.php?id=<?php echo $student['id'] ?>" class="btn btn-primary">Edit</a>
-                                                            <a href="./delete-student.php?id=<?php echo $student['id'] ?>" class="btn btn-danger">Delete</a>
+                                                            <a href="./edit-course.php?id=<?php echo $course['id'] ?>" class="btn btn-primary">Edit</a>
+                                                            <a href="./delete-course.php?id=<?php echo $course['id'] ?>" class="btn btn-danger">Delete</a>
                                                         </td>
                                                     </tr>
                                                 <?php

@@ -4,8 +4,8 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', '9_srs');
 
-$connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-if ($connection->errno !== 0) {
+if ($conn->errno !== 0) {
     die('Connection failed');
 }

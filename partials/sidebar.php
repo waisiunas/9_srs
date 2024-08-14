@@ -16,6 +16,18 @@
                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Students</span>
                 </a>
             </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./show-courses.php">
+                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Courses</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="./show-registrations.php">
+                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Registrations</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
