@@ -15,7 +15,22 @@ $sql = "SELECT * FROM `courses`";
 $result = $conn->query($sql);
 $courses = $result->fetch_all(MYSQLI_ASSOC);
 
-$student_id = $course_id = "";
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $id = $_GET['id'];
+} else {
+    header('location: ./show-registrations.php');
+}
+
+$sql = "SELECT * FROM `registrations` WHERE `id` = $id";
+$result = $conn->query($sql);
+
+if ($result->num_rows === 0) {
+    header('location: ./show-registrations.php');
+}
+$registration = $result->fetch_assoc();
+
+$student_id = $registration['student_id'];
+$course_id = $registration['course_id'];
 $errors = [];
 
 if (isset($_POST['submit'])) {
@@ -34,11 +49,10 @@ if (isset($_POST['submit'])) {
     }
 
     if (count($errors) === 0) {
-        $sql = "INSERT INTO `registrations`(`student_id`, `course_id`) VALUES ('$student_id', '$course_id')";
+        $sql = "UPDATE `registrations` SET `student_id` = '$student_id', `course_id` = '$course_id' WHERE `id` = $id";
 
         if ($conn->query($sql)) {
             $success = "Magic has been spelled!";
-            $student_id = $course_id = "";
         } else {
             $failure = "Magic has become shopper!";
         }
@@ -62,7 +76,7 @@ if (isset($_POST['submit'])) {
 
                     <div class="row">
                         <div class="col-6">
-                            <h1 class="h3 mb-3">Add Course</h1>
+                            <h1 class="h3 mb-3">Edit Course</h1>
                         </div>
 
                         <div class="col-6 text-end">
@@ -75,7 +89,7 @@ if (isset($_POST['submit'])) {
                             <div class="card">
                                 <div class="card-body">
                                     <?php require_once './partials/alerts.php' ?>
-                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>?id=<?php echo $id ?>" method="post">
                                         <div class="mb-3">
                                             <label for="student_id" class="form-label">Student Name</label>
                                             <select name="student_id" class="form-select <?php if (isset($errors['student_id'])) echo 'is-invalid' ?>" id="student_id">

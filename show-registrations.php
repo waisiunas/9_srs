@@ -6,7 +6,11 @@ if (!isset($_SESSION['user'])) {
     header('location: ./');
 }
 
-$sql = "SELECT * FROM `registrations`";
+$sql = "SELECT `students`.`name` AS `student_name`,  `registrations`. `id` AS `reg_id`, `courses`.`name` AS `course_name`
+FROM `students` INNER JOIN `registrations`
+ON `students`.`id` = `registrations`.`student_id`
+INNER JOIN `courses`
+ON `registrations`.`course_id` = `courses`.`id`";
 $result = $conn->query($sql);
 $registrations = $result->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -45,8 +49,8 @@ $registrations = $result->fetch_all(MYSQLI_ASSOC);
                                             <thead>
                                                 <tr>
                                                     <th>Sr. No.</th>
-                                                    <th>Name</th>
-                                                    <th>Duration</th>
+                                                    <th>Student</th>
+                                                    <th>Course</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -57,11 +61,11 @@ $registrations = $result->fetch_all(MYSQLI_ASSOC);
                                                 foreach ($registrations as $registration) { ?>
                                                     <tr>
                                                         <td><?php echo $sr++; ?></td>
-                                                        <td><?php echo $registration['name'] ?></td>
-                                                        <td><?php echo $registration['duration'] ?></td>
+                                                        <td><?php echo $registration['student_name'] ?></td>
+                                                        <td><?php echo $registration['course_name'] ?></td>
                                                         <td>
-                                                            <a href="./edit-registration.php?id=<?php echo $registration['id'] ?>" class="btn btn-primary">Edit</a>
-                                                            <a href="./delete-registration.php?id=<?php echo $registration['id'] ?>" class="btn btn-danger">Delete</a>
+                                                            <a href="./edit-registration.php?id=<?php echo $registration['reg_id'] ?>" class="btn btn-primary">Edit</a>
+                                                            <a href="./delete-registration.php?id=<?php echo $registration['reg_id'] ?>" class="btn btn-danger">Delete</a>
                                                         </td>
                                                     </tr>
                                                 <?php
